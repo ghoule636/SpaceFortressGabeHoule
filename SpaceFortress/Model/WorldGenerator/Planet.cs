@@ -8,30 +8,42 @@ namespace SpaceFortress.Model.WorldGenerator
 {
     public class Planet
     {
-        private ArrayList world;
-        private int myWidth;
-        private int myHeight;
+        private ArrayList myWorld;
+        private String myName;
+        private String mySize;
+        private String[] mySizes;
 
         public Planet()
         {
-            world = new ArrayList();
-            myWidth = 0;
-            myHeight = 0;
+            myWorld = new ArrayList();
+            myName = "";
+            mySizes = new String[] { "Small", "Medium", "Large" };
+            mySize = mySizes[0];
         }
 
-        public Planet getPlanet()
+        public String getName()
         {
-            return this;
+            return myName;
         }
 
-        public int getWidth()
+        public void setName(String theName)
         {
-            return myWidth;
+            myName = theName;
         }
 
-        public int getHeight()
+        public String[] getSizes()
         {
-            return myHeight;
+            return mySizes;
+        }
+
+        public void setSize(int theIndex)
+        {
+            mySize = mySizes[theIndex];
+        }
+
+        public String getSize()
+        {
+            return mySize;
         }
     }
 }

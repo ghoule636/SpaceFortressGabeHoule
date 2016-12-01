@@ -8,8 +8,8 @@ namespace SpaceFortress.Model
 {
     public class GameEngine
     {
-        public Planet myPlanet;
-        public ArrayList myChars;
+        private Planet myPlanet;
+        private ArrayList myChars;
         private StartScreen myStartScreen;
 
         public GameEngine(StartScreen theStartScreen)
@@ -28,8 +28,18 @@ namespace SpaceFortress.Model
         public void newInit()
         {
             //Application.Run(new WorldGenForm());
-            WorldGenForm newWorld = new WorldGenForm();
+            WorldGenForm newWorld = new WorldGenForm(this);
             newWorld.Show();
+        }
+
+        public StartScreen getStartScreen()
+        {
+            return myStartScreen;
+        }
+
+        public Planet getPlanet()
+        {
+            return myPlanet;
         }
     }
 }
