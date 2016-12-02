@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.PlanetSizeCmbBox = new System.Windows.Forms.ComboBox();
             this.NextBtn = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.MapGenInfo = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -42,6 +46,7 @@
             this.textBox1.Size = new System.Drawing.Size(215, 26);
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.Validated += new System.EventHandler(this.nameTextBox1_Validated);
             // 
             // label1
             // 
@@ -80,11 +85,24 @@
             this.NextBtn.UseVisualStyleBackColor = true;
             this.NextBtn.Click += new System.EventHandler(this.nextBtn_Click);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // MapGenInfo
+            // 
+            this.MapGenInfo.AutoSize = true;
+            this.MapGenInfo.Location = new System.Drawing.Point(239, 160);
+            this.MapGenInfo.Name = "MapGenInfo";
+            this.MapGenInfo.Size = new System.Drawing.Size(0, 20);
+            this.MapGenInfo.TabIndex = 6;
+            // 
             // WorldGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(562, 391);
+            this.Controls.Add(this.MapGenInfo);
             this.Controls.Add(this.NextBtn);
             this.Controls.Add(this.PlanetSizeCmbBox);
             this.Controls.Add(this.label2);
@@ -94,6 +112,7 @@
             this.Text = "WorldGenForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WorldGenForm_FormClosed);
             this.Load += new System.EventHandler(this.WorldGenForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,5 +125,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox PlanetSizeCmbBox;
         private System.Windows.Forms.Button NextBtn;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label MapGenInfo;
     }
 }

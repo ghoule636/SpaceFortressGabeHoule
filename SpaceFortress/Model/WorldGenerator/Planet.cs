@@ -3,19 +3,20 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SpaceFortress.Model.Landscape;
 
 namespace SpaceFortress.Model.WorldGenerator
 {
     public class Planet
     {
-        private ArrayList myWorld;
+        private Terrain[][] myWorld;
         private String myName;
         private String mySize;
         private String[] mySizes;
 
         public Planet()
         {
-            myWorld = new ArrayList();
+            myWorld = new Terrain[0][];
             myName = "";
             mySizes = new String[] { "Small", "Medium", "Large" };
             mySize = mySizes[0];
@@ -29,6 +30,16 @@ namespace SpaceFortress.Model.WorldGenerator
         public void setName(String theName)
         {
             myName = theName;
+        }
+
+        public Terrain[][] getTerrain()
+        {
+            return myWorld;
+        }
+
+        public void setTerrain(Terrain[][] theWorld)
+        {
+            myWorld = theWorld;
         }
 
         public String[] getSizes()

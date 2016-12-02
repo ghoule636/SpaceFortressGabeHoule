@@ -48,8 +48,12 @@
   <ItemGroup>
     <Compile Include="Controller\NewGameController.cs" />
     <Compile Include="Model\GameEngine.cs" />
+    <Compile Include="Model\Landscape\AbstractTerrain.cs" />
+    <Compile Include="Model\Landscape\Mountain.cs" />
+    <Compile Include="Model\Landscape\Ocean.cs" />
     <Compile Include="Model\WorldGenerator\Planet.cs" />
     <Compile Include="Model\WorldGenerator\CreateWorld.cs" />
+    <Compile Include="Model\Landscape\Terrain.cs" />
     <Compile Include="View\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\StartScreen.cs">
