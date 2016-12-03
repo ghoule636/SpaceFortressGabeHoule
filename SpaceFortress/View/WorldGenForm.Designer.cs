@@ -68,6 +68,7 @@
             // 
             // PlanetSizeCmbBox
             // 
+            this.PlanetSizeCmbBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PlanetSizeCmbBox.FormattingEnabled = true;
             this.PlanetSizeCmbBox.Location = new System.Drawing.Point(27, 135);
             this.PlanetSizeCmbBox.Name = "PlanetSizeCmbBox";

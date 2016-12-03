@@ -80,8 +80,8 @@ namespace SpaceFortress.View
                 PlanetSizeCmbBox.Hide();
                 label2.Hide();
                 NextBtn.Enabled = false;
-                myPlanet.setTerrain(CreateWorld.createMap(myPlanet.getSize()));
-                MapGenInfo.Text = myPlanet.getTerrain().GetLength(0).ToString();
+                myPlanet.setTerrain(new CreateWorld().createMap(myPlanet.getSize()));
+                MapGenInfo.Text = myPlanet.getTerrain()[0].GetLength(0).ToString();
             }
         }
     }

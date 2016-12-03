@@ -7,44 +7,117 @@ using SpaceFortress.Model.Landscape;
 
 namespace SpaceFortress.Model.WorldGenerator
 {
-    static class CreateWorld
+    class CreateWorld
     {
-        private static int small = 128;
-        private static int medium = 256;
-        private static int large = 512;
+        private static Random rand = new Random();
 
-        public static Terrain[][] createMap(String theSize)
+        private static int SMALL = 5;
+        private static int MEDIUM = 256;
+        private static int LARGE = 512;
+
+        private Terrain[][] myTerrain;
+        private double[][] myHeightMap;
+        private int mySize;
+
+        public Terrain[][] createMap(String theSize)
         {
-            Terrain[][] result = new Terrain[0][];
-            float[][] tempEleArr = new float[0][];
-
             if (theSize == "Small")
             {
-                result = new Terrain[small][];
-                tempEleArr = new float[small][];
-
-
+                mySize = SMALL;
             } else if (theSize == "Medium")
             {
-                result = new Terrain[medium][];
-                tempEleArr = new float[medium][];
-            }
-            else if (theSize == "Large")
+                mySize = MEDIUM;
+            } else if (theSize == "Large")
             {
-                result = new Terrain[large][];
-                tempEleArr = new float[large][];
-
+                mySize = LARGE;
             }
 
-            generateHeightmap(tempEleArr);
+            initArrays();
 
-            return result;
+            generateHeightmap();
 
+            return myTerrain;
         }
 
-        private static void generateHeightmap(float[][] elevationArr)
+        private void initArrays()
         {
+            myTerrain = new Terrain[mySize][];
+            myHeightMap = new double[mySize][];
 
+            for (int i = 0; i < mySize; i++)
+            {
+                myHeightMap[i] = new double[mySize];
+                myTerrain[i] = new Terrain[mySize];
+            }
+        }
+
+        /**
+         * Generates initial corner values for diamond-square algorithm. 
+         */
+        private void seedMap()
+        {
+            myHeightMap[0][0] = rand.NextDouble() * 1000;
+            myHeightMap[mySize - 1][0] = rand.NextDouble() * 1000;
+            myHeightMap[0][mySize - 1] = rand.NextDouble() * 1000;
+            myHeightMap[mySize - 1][mySize - 1] = rand.NextDouble() * 1000;
+        }
+
+        private void generateHeightmap()
+        {
+            seedMap();
+
+            double h = 500.0;
+
+            for (int sideLength = mySize - 1; sideLength >= 2; sideLength /= 2, h /= 2)
+            {
+                int halfSide = sideLength / 2;
+                // square algorithm
+                for(int x = 0; x < mySize - 1; x += sideLength)
+                {
+                    for (int y = 0; y < mySize - 1; y += sideLength)
+                    {
+                        double avg = myHeightMap[x][y] +
+                            myHeightMap[x + sideLength][y] +
+                            myHeightMap[x][y + sideLength] +
+                            myHeightMap[x + sideLength][y + sideLength];
+                        avg /= 4.0;
+
+                        myHeightMap[x + halfSide][y + sideLength] = avg + (rand.NextDouble() * 2 * h) - h;
+
+                    }
+                }
+                // diamond algorithm
+                for (int x  = 0; x < mySize - 1; x += halfSide)
+                {
+                    for (int y = (x + halfSide) % sideLength; y < mySize - 1; y += sideLength)
+                    {
+                        double avg = myHeightMap[(x - halfSide + mySize - 1) % (mySize - 1)][y] +
+                            myHeightMap[(x + halfSide) % (mySize - 1)][y] +
+                            myHeightMap[x][(y + halfSide) % (mySize - 1)] +
+                            myHeightMap[x][(y - halfSide + mySize - 1) % (mySize - 1)];
+                        avg /= 4.0;
+
+                        avg = avg + (rand.NextDouble() * 2 * h) - h;
+                        myHeightMap[x][y] = avg;
+
+                        if (x == 0)
+                        {
+                            myHeightMap[mySize - 1][y] = avg;
+                            myHeightMap[x][mySize - 1] = avg;
+                        }
+                    }
+                }
+
+                foreach (double[] row in myHeightMap)
+                {
+                    foreach (double d in row)
+                    {
+                        Console.Write(d.ToString("F") + " ");
+
+                    }
+                    Console.WriteLine();
+                }
+            }
         }
     }
 }
