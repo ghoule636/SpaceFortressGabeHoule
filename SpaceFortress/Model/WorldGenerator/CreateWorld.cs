@@ -11,9 +11,9 @@ namespace SpaceFortress.Model.WorldGenerator
     {
         private static Random rand = new Random();
 
-        private static int SMALL = 5;
-        private static int MEDIUM = 256;
-        private static int LARGE = 512;
+        private static int SMALL = 129;
+        private static int MEDIUM = 257;
+        private static int LARGE = 513;
 
         private Terrain[][] myTerrain;
         private double[][] myHeightMap;
@@ -62,6 +62,9 @@ namespace SpaceFortress.Model.WorldGenerator
             myHeightMap[mySize - 1][mySize - 1] = rand.NextDouble() * 1000;
         }
 
+        /**
+         * Uses diamond-square algorithm to create a planet geography.
+         */
         private void generateHeightmap()
         {
             seedMap();
@@ -82,7 +85,7 @@ namespace SpaceFortress.Model.WorldGenerator
                             myHeightMap[x + sideLength][y + sideLength];
                         avg /= 4.0;
 
-                        myHeightMap[x + halfSide][y + sideLength] = avg + (rand.NextDouble() * 2 * h) - h;
+                        myHeightMap[x + halfSide][y + halfSide] = avg + (rand.NextDouble() * 2 * h) - h;
 
                     }
                 }
@@ -103,21 +106,35 @@ namespace SpaceFortress.Model.WorldGenerator
                         if (x == 0)
                         {
                             myHeightMap[mySize - 1][y] = avg;
+                        }
+                        if (y == 0)
+                        {
                             myHeightMap[x][mySize - 1] = avg;
                         }
                     }
                 }
+            }
+            //foreach (double[] row in myHeightMap)
+            //{
+            //    foreach (double d in row)
+            //    {
+            //        Console.Write(d.ToString("F") + " ");
 
-                foreach (double[] row in myHeightMap)
+            //    }
+            //    Console.WriteLine();
+            //}
+        }
+
+        private void generateOcean()
+        {
+            foreach (double[] row in myHeightMap) {
+                foreach (double d in row)
                 {
-                    foreach (double d in row)
-                    {
-                        Console.Write(d.ToString("F") + " ");
-
-                    }
-                    Console.WriteLine();
+                    Console.WriteLine("");
                 }
             }
         }
+
+
     }
 }

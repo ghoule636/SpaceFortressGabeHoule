@@ -32,6 +32,8 @@ namespace SpaceFortress.View
 
         private void WorldGenForm_Load(object sender, EventArgs e)
         {
+            PlanetDrawPanel.BackColor = Color.White;
+            PlanetDrawPanel.Hide();
         }
 
         private void WorldGenForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -81,8 +83,30 @@ namespace SpaceFortress.View
                 label2.Hide();
                 NextBtn.Enabled = false;
                 myPlanet.setTerrain(new CreateWorld().createMap(myPlanet.getSize()));
-                MapGenInfo.Text = myPlanet.getTerrain()[0].GetLength(0).ToString();
+                PlanetDrawPanel.Height = this.Height - 100;
+                PlanetDrawPanel.Width = this.Width - 100;  //(this.Height - 50, this.Width - 100);
+
+                PlanetDrawPanel.Show();
+                drawPlanet();
             }
+        }
+
+        private void drawPlanet()
+        {
+            Graphics graphics = PlanetDrawPanel.CreateGraphics();
+
+            graphics.Clear(Color.White);
+
+            Rectangle rectangle = new Rectangle(this.Width / 4, this.Height / 4, this.Width / 2, this.Height / 2);
+            graphics.DrawRectangle(Pens.Red, rectangle);
+
+            
+
+        }
+
+        private void WorldGenForm_Paint(object sender, PaintEventArgs e)
+        {
+            drawPlanet();
         }
     }
 }
