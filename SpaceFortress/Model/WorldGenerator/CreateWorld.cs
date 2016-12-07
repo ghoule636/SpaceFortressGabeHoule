@@ -127,12 +127,19 @@ namespace SpaceFortress.Model.WorldGenerator
 
         private void generateOcean()
         {
+            ArrayList heightArr = new ArrayList();
+
+
             foreach (double[] row in myHeightMap) {
                 foreach (double d in row)
                 {
-                    Console.WriteLine("");
+                    heightArr.Add(d);
                 }
             }
+
+            heightArr.Sort();
+
+            //double waterline = heightArr.GetRange(42, 1);
         }
 
 
