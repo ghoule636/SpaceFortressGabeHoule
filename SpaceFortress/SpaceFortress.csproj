@@ -49,8 +49,10 @@
     <Compile Include="Controller\NewGameController.cs" />
     <Compile Include="Model\GameEngine.cs" />
     <Compile Include="Model\Landscape\AbstractTerrain.cs" />
+    <Compile Include="Model\Landscape\Hill.cs" />
     <Compile Include="Model\Landscape\Mountain.cs" />
     <Compile Include="Model\Landscape\Ocean.cs" />
+    <Compile Include="Model\Landscape\Plains.cs" />
     <Compile Include="Model\WorldGenerator\Planet.cs" />
     <Compile Include="Model\WorldGenerator\CreateWorld.cs" />
     <Compile Include="Model\Landscape\Terrain.cs" />

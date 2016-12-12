@@ -9,14 +9,13 @@ namespace SpaceFortress.Model.Landscape
     abstract class AbstractTerrain : Terrain
     {
         private char myType;
-        private float myElevation;
-        private float myMoisture;
+        private double myElevation;
+        private double myMoisture;
 
-        public void create(char theType, float theElevation, float theMoisture)
+        public void create(char theType, double theElevation)
         {
             myElevation = theElevation;
             myType = theType;
-            myMoisture = theMoisture;
         }
 
         public char getType()
@@ -24,12 +23,12 @@ namespace SpaceFortress.Model.Landscape
             return myType;
         }
 
-        public float getElevation()
+        public double getElevation()
         {
             return myElevation;
         }
 
-        public float getMoisture()
+        public double getMoisture()
         {
             return myMoisture;
         }

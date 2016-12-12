@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SpaceFortress.Model;
 using SpaceFortress.Model.WorldGenerator;
+using SpaceFortress.Model.Landscape;
 
 namespace SpaceFortress.View
 {
@@ -16,6 +17,8 @@ namespace SpaceFortress.View
     {
         private GameEngine myGame;
         private Planet myPlanet;
+        private int mapScale;
+        private bool showingPlanet;
 
         public WorldGenForm(GameEngine theGame)
         {
@@ -23,6 +26,8 @@ namespace SpaceFortress.View
             myGame = theGame;
             myPlanet = theGame.getPlanet();
             PlanetSizeCmbBox.DataSource = myPlanet.getSizes();
+            mapScale = 50;
+            showingPlanet = false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -83,9 +88,19 @@ namespace SpaceFortress.View
                 label2.Hide();
                 NextBtn.Enabled = false;
                 myPlanet.setTerrain(new CreateWorld().createMap(myPlanet.getSize()));
+                showingPlanet = true;
                 PlanetDrawPanel.Height = this.Height - 100;
-                PlanetDrawPanel.Width = this.Width - 100;  //(this.Height - 50, this.Width - 100);
+                PlanetDrawPanel.Width = this.Width - 100;
+                int sizeMod;
+                if (PlanetDrawPanel.Height > PlanetDrawPanel.Width)
+                {
+                    sizeMod = PlanetDrawPanel.Height;
+                } else
+                {
+                    sizeMod = PlanetDrawPanel.Width;
+                }
 
+                mapScale = sizeMod / myPlanet.getTerrain().Length;
                 PlanetDrawPanel.Show();
                 drawPlanet();
             }
@@ -94,19 +109,77 @@ namespace SpaceFortress.View
         private void drawPlanet()
         {
             Graphics graphics = PlanetDrawPanel.CreateGraphics();
+            Terrain[][] drawPlanet = myPlanet.getTerrain();
+            Brush drawBrush = null;
+            //int startPoint = 10;
+            int endWidthPoint = PlanetDrawPanel.Width - (int)(PlanetDrawPanel.Width * 0.05);
+            int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
 
             graphics.Clear(Color.White);
 
-            Rectangle rectangle = new Rectangle(this.Width / 4, this.Height / 4, this.Width / 2, this.Height / 2);
-            graphics.DrawRectangle(Pens.Red, rectangle);
+            //Rectangle rectangle = new Rectangle(startPoint, startPoint, endWidthPoint, endHeightPoint);
+            //graphics.DrawRectangle(Pens.Red, rectangle);
+            Console.Write("scale: " + mapScale);
+            Console.Write("width: " + PlanetDrawPanel.Width);
+            Console.Write("mapWidth: " + myPlanet.getTerrain().Length);
+            Console.WriteLine();
 
-            
+            for (int i = 0; i < drawPlanet.Length; i += 1)
+            {
+                for (int j = 0; j < drawPlanet[0].Length; j += 1)
+                {
+                    Rectangle rect = new Rectangle(i * mapScale, j * mapScale, mapScale, mapScale);
+
+                    if (drawPlanet[i][j].GetType().Equals(typeof(Ocean)))
+                    {
+                        drawBrush = new SolidBrush(Color.DarkBlue);
+                    } else if (drawPlanet[i][j].GetType().Equals(typeof(Mountain)))
+                    {
+                        drawBrush = new SolidBrush(Color.Gray);
+                    }
+                    else if (drawPlanet[i][j].GetType().Equals(typeof(Hill)))
+                    {
+                        drawBrush = new SolidBrush(Color.SaddleBrown);
+                    }
+                    else if (drawPlanet[i][j].GetType().Equals(typeof(Plains)))
+                    {
+                        drawBrush = new SolidBrush(Color.ForestGreen);
+                    } else
+                    {
+                        drawBrush = new SolidBrush(Color.Red);
+                    }
+
+
+                    graphics.FillRectangle(drawBrush, rect);
+                }
+            }
+
+            //for (int i = startPoint; i < endWidthPoint + startPoint; i += mapScale)
+            //{
+            //    Point gridTop = new Point(i, startPoint);
+            //    Point gridBottom = new Point(i, endHeightPoint + startPoint);
+            //    graphics.DrawLine(Pens.Black, gridTop, gridBottom);
+            //}
+            //for (int j = startPoint; j < endHeightPoint + startPoint; j += mapScale)
+            //{
+            //    Point gridStart = new Point(startPoint, j);
+            //    Point gridEnd = new Point(endWidthPoint + startPoint, j);
+            //    graphics.DrawLine(Pens.Black, gridStart, gridEnd);
+            //}
 
         }
 
         private void WorldGenForm_Paint(object sender, PaintEventArgs e)
         {
-            drawPlanet();
+        }
+
+        private void WorldGenForm_SizeChanged(object sender, EventArgs e)
+        {
+            if(showingPlanet)
+            {
+                mapScale = PlanetDrawPanel.Width / myPlanet.getTerrain().Length;
+                drawPlanet();
+            }
         }
     }
 }

@@ -40,6 +40,7 @@ namespace SpaceFortress.Model.WorldGenerator
         public void setTerrain(Terrain[][] theWorld)
         {
             myWorld = theWorld;
+
         }
 
         public String[] getSizes()

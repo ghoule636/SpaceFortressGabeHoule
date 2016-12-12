@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SpaceFortress.Model.Landscape
 {
-    class Ocean : AbstractTerrain
+    class Plains : AbstractTerrain
     {
-        public Ocean(double theElevation)
+        public Plains(double theElevation)
         {
-            create('~', theElevation);
+            create('_', theElevation);
         }
     }
 }

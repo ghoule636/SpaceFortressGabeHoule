@@ -8,9 +8,9 @@ namespace SpaceFortress.Model.Landscape
 {
     class Mountain : AbstractTerrain
     {
-        public Mountain(float theElevation, float theMoisture)
+        public Mountain(double theElevation)
         {
-            create('^', theElevation, theMoisture);
+            create('^', theElevation);
         }
     }
 }

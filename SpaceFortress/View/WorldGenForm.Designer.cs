@@ -42,10 +42,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(15, 36);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Location = new System.Drawing.Point(22, 55);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(145, 20);
+            this.textBox1.Size = new System.Drawing.Size(216, 26);
             this.textBox1.TabIndex = 0;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.Validated += new System.EventHandler(this.nameTextBox1_Validated);
@@ -53,20 +52,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 19);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(22, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 13);
+            this.label1.Size = new System.Drawing.Size(139, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Start Planet Name";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 72);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(22, 111);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.Size = new System.Drawing.Size(89, 20);
             this.label2.TabIndex = 3;
             this.label2.Text = "Planet Size";
             // 
@@ -74,20 +71,18 @@
             // 
             this.PlanetSizeCmbBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PlanetSizeCmbBox.FormattingEnabled = true;
-            this.PlanetSizeCmbBox.Location = new System.Drawing.Point(18, 88);
-            this.PlanetSizeCmbBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PlanetSizeCmbBox.Location = new System.Drawing.Point(27, 135);
             this.PlanetSizeCmbBox.Name = "PlanetSizeCmbBox";
-            this.PlanetSizeCmbBox.Size = new System.Drawing.Size(82, 21);
+            this.PlanetSizeCmbBox.Size = new System.Drawing.Size(121, 28);
             this.PlanetSizeCmbBox.TabIndex = 4;
             this.PlanetSizeCmbBox.SelectedIndexChanged += new System.EventHandler(this.PlanetSizeCmbBox_SelectedIndexChanged);
             // 
             // NextBtn
             // 
             this.NextBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.NextBtn.Location = new System.Drawing.Point(488, 421);
-            this.NextBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.NextBtn.Location = new System.Drawing.Point(732, 648);
             this.NextBtn.Name = "NextBtn";
-            this.NextBtn.Size = new System.Drawing.Size(85, 29);
+            this.NextBtn.Size = new System.Drawing.Size(128, 45);
             this.NextBtn.TabIndex = 5;
             this.NextBtn.Text = "Next ";
             this.NextBtn.UseVisualStyleBackColor = true;
@@ -100,10 +95,9 @@
             // MapGenInfo
             // 
             this.MapGenInfo.AutoSize = true;
-            this.MapGenInfo.Location = new System.Drawing.Point(159, 104);
-            this.MapGenInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.MapGenInfo.Location = new System.Drawing.Point(238, 160);
             this.MapGenInfo.Name = "MapGenInfo";
-            this.MapGenInfo.Size = new System.Drawing.Size(0, 13);
+            this.MapGenInfo.Size = new System.Drawing.Size(0, 20);
             this.MapGenInfo.TabIndex = 6;
             // 
             // PlanetDrawPanel
@@ -112,18 +106,19 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PlanetDrawPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.PlanetDrawPanel.Location = new System.Drawing.Point(18, 19);
-            this.PlanetDrawPanel.MinimumSize = new System.Drawing.Size(100, 100);
+            this.PlanetDrawPanel.Location = new System.Drawing.Point(27, 29);
+            this.PlanetDrawPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.PlanetDrawPanel.MinimumSize = new System.Drawing.Size(150, 154);
             this.PlanetDrawPanel.Name = "PlanetDrawPanel";
-            this.PlanetDrawPanel.Size = new System.Drawing.Size(100, 100);
+            this.PlanetDrawPanel.Size = new System.Drawing.Size(150, 154);
             this.PlanetDrawPanel.TabIndex = 7;
             // 
             // WorldGenForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(584, 461);
+            this.ClientSize = new System.Drawing.Size(876, 709);
             this.Controls.Add(this.PlanetDrawPanel);
             this.Controls.Add(this.MapGenInfo);
             this.Controls.Add(this.NextBtn);
@@ -131,13 +126,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.MinimumSize = new System.Drawing.Size(300, 400);
+            this.MinimumSize = new System.Drawing.Size(439, 585);
             this.Name = "WorldGenForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WorldGenForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WorldGenForm_FormClosed);
             this.Load += new System.EventHandler(this.WorldGenForm_Load);
+            this.SizeChanged += new System.EventHandler(this.WorldGenForm_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.WorldGenForm_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);

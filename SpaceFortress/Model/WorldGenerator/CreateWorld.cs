@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpaceFortress.Model.Landscape;
+using System.Collections.Generic;
 
 namespace SpaceFortress.Model.WorldGenerator
 {
@@ -14,6 +15,9 @@ namespace SpaceFortress.Model.WorldGenerator
         private static int SMALL = 129;
         private static int MEDIUM = 257;
         private static int LARGE = 513;
+        private static double WATER_LEVEL = 0.6;
+        private static double HILL_LINE = 0.9;
+        private static double TREE_LINE = 0.98;
 
         private Terrain[][] myTerrain;
         private double[][] myHeightMap;
@@ -35,6 +39,8 @@ namespace SpaceFortress.Model.WorldGenerator
             initArrays();
 
             generateHeightmap();
+
+            generateGeography();
 
             return myTerrain;
         }
@@ -114,20 +120,11 @@ namespace SpaceFortress.Model.WorldGenerator
                     }
                 }
             }
-            //foreach (double[] row in myHeightMap)
-            //{
-            //    foreach (double d in row)
-            //    {
-            //        Console.Write(d.ToString("F") + " ");
-
-            //    }
-            //    Console.WriteLine();
-            //}
         }
 
-        private void generateOcean()
+        private void generateGeography()
         {
-            ArrayList heightArr = new ArrayList();
+            List<double> heightArr = new List<double>();
 
 
             foreach (double[] row in myHeightMap) {
@@ -139,9 +136,31 @@ namespace SpaceFortress.Model.WorldGenerator
 
             heightArr.Sort();
 
-            //double waterline = heightArr.GetRange(42, 1);
+            double waterline = heightArr[(int) (heightArr.Count * WATER_LEVEL)];
+            double treeline = heightArr[(int) (heightArr.Count * TREE_LINE)];
+            double hillline = heightArr[(int)(heightArr.Count * HILL_LINE)];
+
+            for (int i = 0; i < myHeightMap[0].Length; i++)
+            {
+                for (int j = 0; j < myHeightMap.Length; j++)
+                {
+                    if (myHeightMap[i][j] < waterline)
+                    {
+                        myTerrain[i][j] = new Ocean(myHeightMap[i][j]);
+                    }
+                    else if (myHeightMap[i][j] > hillline && myHeightMap[i][j] < treeline)
+                    {
+                        myTerrain[i][j] = new Hill(myHeightMap[i][j]);
+                    }
+                    else if (myHeightMap[i][j] > treeline) 
+                    {
+                        myTerrain[i][j] = new Mountain(myHeightMap[i][j]);
+                    } else
+                    {
+                        myTerrain[i][j] = new Plains(myHeightMap[i][j]);
+                    }
+                }
+            }
         }
-
-
     }
 }

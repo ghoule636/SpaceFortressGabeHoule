@@ -10,9 +10,9 @@ namespace SpaceFortress.Model.Landscape
     {
         char getType();
 
-        float getElevation();
+        double getElevation();
 
-        float getMoisture();
+        double getMoisture();
     }
 }
 
