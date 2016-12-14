@@ -14,12 +14,17 @@ namespace SpaceFortress.Model.WorldGenerator
         private String mySize;
         private String[] mySizes;
 
+        private double myMaxHeight;
+        private double myMinHeight;
+
         public Planet()
         {
             myWorld = new Terrain[0][];
             myName = "";
             mySizes = new String[] { "Small", "Medium", "Large" };
             mySize = mySizes[0];
+            myMaxHeight = (double)Int64.MinValue;
+            myMinHeight = (double)Int64.MaxValue;
         }
 
         public String getName()
@@ -41,6 +46,23 @@ namespace SpaceFortress.Model.WorldGenerator
         {
             myWorld = theWorld;
 
+            //proceed to process information about the new terrain
+
+            for (int i = 0; i < myWorld[0].Length; i++)
+            {
+                for (int j = 0; j < myWorld.Length; j++)
+                {
+                    double tempHeight = myWorld[i][j].getElevation();
+                    if (tempHeight > myMaxHeight)
+                    {
+                        myMaxHeight = tempHeight;                    
+                    }
+                    else if (tempHeight < myMinHeight)
+                    {
+                        myMinHeight = tempHeight;
+                    }
+                }
+            }
         }
 
         public String[] getSizes()
@@ -56,6 +78,16 @@ namespace SpaceFortress.Model.WorldGenerator
         public String getSize()
         {
             return mySize;
+        }
+
+        public double getMaxHeight()
+        {
+            return myMaxHeight;
+        }
+
+        public double getMinHeight()
+        {
+            return myMinHeight;
         }
     }
 }

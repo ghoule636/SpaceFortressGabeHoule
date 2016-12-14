@@ -90,9 +90,8 @@ namespace SpaceFortress.Model.WorldGenerator
                             myHeightMap[x][y + sideLength] +
                             myHeightMap[x + sideLength][y + sideLength];
                         avg /= 4.0;
-
-                        myHeightMap[x + halfSide][y + halfSide] = avg + (rand.NextDouble() * 2 * h) - h;
-
+                        avg += (rand.NextDouble() * 2 * h) - h;
+                        myHeightMap[x + halfSide][y + halfSide] = avg;
                     }
                 }
                 // diamond algorithm
@@ -104,9 +103,8 @@ namespace SpaceFortress.Model.WorldGenerator
                             myHeightMap[(x + halfSide) % (mySize - 1)][y] +
                             myHeightMap[x][(y + halfSide) % (mySize - 1)] +
                             myHeightMap[x][(y - halfSide + mySize - 1) % (mySize - 1)];
-                        avg /= 4.0;
-
-                        avg = avg + (rand.NextDouble() * 2 * h) - h;
+                        avg /= 4.0;                   
+                        avg += (rand.NextDouble() * 2 * h) - h;
                         myHeightMap[x][y] = avg;
 
                         if (x == 0)
@@ -126,7 +124,6 @@ namespace SpaceFortress.Model.WorldGenerator
         {
             List<double> heightArr = new List<double>();
 
-
             foreach (double[] row in myHeightMap) {
                 foreach (double d in row)
                 {
@@ -144,23 +141,28 @@ namespace SpaceFortress.Model.WorldGenerator
             {
                 for (int j = 0; j < myHeightMap.Length; j++)
                 {
-                    if (myHeightMap[i][j] < waterline)
+                    double temp = myHeightMap[i][j];
+
+                    // create geography types
+                    if (temp < waterline)
                     {
-                        myTerrain[i][j] = new Ocean(myHeightMap[i][j]);
+                        myTerrain[i][j] = new Ocean(temp);
                     }
-                    else if (myHeightMap[i][j] > hillline && myHeightMap[i][j] < treeline)
+                    else if (temp > hillline && temp < treeline)
                     {
-                        myTerrain[i][j] = new Hill(myHeightMap[i][j]);
+                        myTerrain[i][j] = new Hill(temp);
                     }
-                    else if (myHeightMap[i][j] > treeline) 
+                    else if (temp > treeline) 
                     {
-                        myTerrain[i][j] = new Mountain(myHeightMap[i][j]);
+                        myTerrain[i][j] = new Mountain(temp);
                     } else
                     {
-                        myTerrain[i][j] = new Plains(myHeightMap[i][j]);
+                        myTerrain[i][j] = new Plains(temp);
                     }
                 }
             }
         }
+
+
     }
 }

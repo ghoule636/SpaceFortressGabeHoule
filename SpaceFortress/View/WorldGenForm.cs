@@ -87,7 +87,11 @@ namespace SpaceFortress.View
                 PlanetSizeCmbBox.Hide();
                 label2.Hide();
                 NextBtn.Enabled = false;
-                myPlanet.setTerrain(new CreateWorld().createMap(myPlanet.getSize()));
+                CreateWorld newPlanet = new CreateWorld();
+
+                myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));
+
+
                 showingPlanet = true;
                 PlanetDrawPanel.Height = this.Height - 100;
                 PlanetDrawPanel.Width = this.Width - 100;
@@ -130,26 +134,37 @@ namespace SpaceFortress.View
                 {
                     Rectangle rect = new Rectangle(i * mapScale, j * mapScale, mapScale, mapScale);
 
-                    if (drawPlanet[i][j].GetType().Equals(typeof(Ocean)))
-                    {
-                        drawBrush = new SolidBrush(Color.DarkBlue);
-                    } else if (drawPlanet[i][j].GetType().Equals(typeof(Mountain)))
-                    {
-                        drawBrush = new SolidBrush(Color.Gray);
-                    }
-                    else if (drawPlanet[i][j].GetType().Equals(typeof(Hill)))
-                    {
-                        drawBrush = new SolidBrush(Color.SaddleBrown);
-                    }
-                    else if (drawPlanet[i][j].GetType().Equals(typeof(Plains)))
-                    {
-                        drawBrush = new SolidBrush(Color.ForestGreen);
-                    } else
-                    {
-                        drawBrush = new SolidBrush(Color.Red);
-                    }
+                    Terrain temp = drawPlanet[i][j];
 
+                    double tolerance = (temp.getElevation() * 0.00001);
 
+                    int colorVal = (int) (255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight())));
+                    drawBrush = new SolidBrush(Color.FromArgb(255, colorVal, colorVal, colorVal));
+
+                    //if (temp.GetType().Equals(typeof(Ocean)))
+                    //{
+                    //    drawBrush = new SolidBrush(Color.DarkBlue);
+                    //} else if (temp.GetType().Equals(typeof(Mountain)))
+                    //{
+                    //    drawBrush = new SolidBrush(Color.Gray);
+                    //}
+                    //else if (temp.GetType().Equals(typeof(Hill)))
+                    //{
+                    //    drawBrush = new SolidBrush(Color.SaddleBrown);
+                    //}
+                    //else if (temp.GetType().Equals(typeof(Plains)))
+                    //{
+                    //    drawBrush = new SolidBrush(Color.ForestGreen);
+                    //} else
+                    //{
+                    //    drawBrush = new SolidBrush(Color.Red);
+                    //}                                       
+                              
+
+                    //if ((Math.Abs(0.85 - (temp.getElevation() / myPlanet.getMaxHeight()))) <= tolerance)
+                    //{
+                    //    drawBrush = new SolidBrush(Color.Black);
+                    //}
                     graphics.FillRectangle(drawBrush, rect);
                 }
             }
