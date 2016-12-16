@@ -16,6 +16,8 @@ namespace SpaceFortress.Model.WorldGenerator
 
         private double myMaxHeight;
         private double myMinHeight;
+        private double myWaterLevel;
+        private double myOceanDepth;
 
         public Planet()
         {
@@ -25,6 +27,8 @@ namespace SpaceFortress.Model.WorldGenerator
             mySize = mySizes[0];
             myMaxHeight = (double)Int64.MinValue;
             myMinHeight = (double)Int64.MaxValue;
+            myWaterLevel = (double)Int64.MinValue;
+            myOceanDepth = (double)Int64.MaxValue;
         }
 
         public String getName()
@@ -53,6 +57,19 @@ namespace SpaceFortress.Model.WorldGenerator
                 for (int j = 0; j < myWorld.Length; j++)
                 {
                     double tempHeight = myWorld[i][j].getElevation();
+
+                    if (myWorld[i][j].GetType().Equals(typeof(Water)))
+                    {                
+                        if (tempHeight > myWaterLevel)
+                        {
+                            myWaterLevel = tempHeight;
+                        }
+                        else if (tempHeight < myOceanDepth)
+                        {
+                            myOceanDepth = tempHeight;
+                        }
+                    }
+
                     if (tempHeight > myMaxHeight)
                     {
                         myMaxHeight = tempHeight;                    
@@ -89,5 +106,16 @@ namespace SpaceFortress.Model.WorldGenerator
         {
             return myMinHeight;
         }
+
+        public double getWaterLevel()
+        {
+            return myWaterLevel;
+        }
+
+        public double getOceanDepth()
+        {
+            return myOceanDepth;
+        }
+
     }
 }

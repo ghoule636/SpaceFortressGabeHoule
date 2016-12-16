@@ -146,7 +146,7 @@ namespace SpaceFortress.Model.WorldGenerator
                     // create geography types
                     if (temp < waterline)
                     {
-                        myTerrain[i][j] = new Ocean(temp);
+                        myTerrain[i][j] = new Water(temp);
                     }
                     else if (temp > hillline && temp < treeline)
                     {

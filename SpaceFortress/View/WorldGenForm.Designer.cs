@@ -37,6 +37,7 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.MapGenInfo = new System.Windows.Forms.Label();
             this.PlanetDrawPanel = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,6 +113,18 @@
             this.PlanetDrawPanel.Name = "PlanetDrawPanel";
             this.PlanetDrawPanel.Size = new System.Drawing.Size(150, 154);
             this.PlanetDrawPanel.TabIndex = 7;
+            this.PlanetDrawPanel.Click += new System.EventHandler(this.PlanetDrawPanel_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(732, 508);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(110, 33);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Randomize";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.randomizeBtnClick);
             // 
             // WorldGenForm
             // 
@@ -119,6 +132,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(876, 709);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.PlanetDrawPanel);
             this.Controls.Add(this.MapGenInfo);
             this.Controls.Add(this.NextBtn);
@@ -133,7 +147,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WorldGenForm_FormClosed);
             this.Load += new System.EventHandler(this.WorldGenForm_Load);
             this.SizeChanged += new System.EventHandler(this.WorldGenForm_SizeChanged);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.WorldGenForm_Paint);
+            //this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -150,5 +164,6 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Label MapGenInfo;
         private System.Windows.Forms.Panel PlanetDrawPanel;
+        private System.Windows.Forms.Button button1;
     }
 }

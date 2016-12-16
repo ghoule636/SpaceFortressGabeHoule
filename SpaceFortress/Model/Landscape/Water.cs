@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpaceFortress.Model.Landscape
 {
-    class Ocean : AbstractTerrain
+    class Water : AbstractTerrain
     {
-        public Ocean(double theElevation)
+        public Water(double theElevation)
         {
             create('~', theElevation);
         }
