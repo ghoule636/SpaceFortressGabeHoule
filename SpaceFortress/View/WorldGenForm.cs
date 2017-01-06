@@ -25,6 +25,7 @@ namespace SpaceFortress.View
         public WorldGenForm(GameEngine theGame)
         {
             InitializeComponent();
+            this.KeyPreview = true;
             myGame = theGame;
             myPlanet = theGame.getPlanet();
             PlanetSizeCmbBox.DataSource = myPlanet.getSizes();
@@ -93,7 +94,7 @@ namespace SpaceFortress.View
                 NextBtn.Enabled = false;
                 CreateWorld newPlanet = new CreateWorld();
 
-                PlanetDrawPanel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
+                this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
 
                 myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));       
 
@@ -111,6 +112,7 @@ namespace SpaceFortress.View
 
                 mapScale = sizeMod / myPlanet.getTerrain().Length;
                 PlanetDrawPanel.Show();
+                PlanetDrawPanel.Focus();
                 drawPlanet();
             }
         }
@@ -200,11 +202,12 @@ namespace SpaceFortress.View
 
             myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));
             this.drawPlanet();
+            PlanetDrawPanel.Focus();
         }
 
         private void WorldGenForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Console.WriteLine("args: ", e);
+            Console.WriteLine(e.KeyChar);
             Console.WriteLine("sender: ", sender);
         }
 
