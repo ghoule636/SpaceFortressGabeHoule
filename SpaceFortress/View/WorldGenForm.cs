@@ -177,7 +177,7 @@ namespace SpaceFortress.View
 
         private void drawSelection(Graphics theGraphics)
         {
-            Rectangle box = new Rectangle(selectionX, selectionY, 50, 50);
+            Rectangle box = new Rectangle(selectionX, selectionY, 10, 10);
 
 
             Pen drawPen = new Pen(Color.Red);
@@ -209,6 +209,22 @@ namespace SpaceFortress.View
         {
             Console.WriteLine(e.KeyChar);
             Console.WriteLine("sender: ", sender);
+
+            if (e.KeyChar == 'w')
+            {
+                selectionY -= 10;
+            } else if (e.KeyChar == 's')
+            {
+                selectionY += 10;
+            } else if (e.KeyChar == 'a')
+            {
+                selectionX -= 10;
+            } else if (e.KeyChar == 'd')
+            {
+                selectionX += 10;
+            }
+            this.drawPlanet();
+            PlanetDrawPanel.Focus();
         }
 
         private void PlanetDrawPanel_Click(object sender, EventArgs e)

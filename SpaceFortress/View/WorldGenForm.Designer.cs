@@ -119,6 +119,7 @@
             this.PlanetDrawPanel.Size = new System.Drawing.Size(100, 100);
             this.PlanetDrawPanel.TabIndex = 7;
             this.PlanetDrawPanel.Click += new System.EventHandler(this.PlanetDrawPanel_Click);
+            
             // 
             // button1
             // 
@@ -138,6 +139,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer, true);
             this.ClientSize = new System.Drawing.Size(584, 461);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.PlanetDrawPanel);
