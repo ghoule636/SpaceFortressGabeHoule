@@ -26,6 +26,7 @@ namespace SpaceFortress.View
         {
             InitializeComponent();
             this.KeyPreview = true;
+            this.DoubleBuffered = true;
             myGame = theGame;
             myPlanet = theGame.getPlanet();
             PlanetSizeCmbBox.DataSource = myPlanet.getSizes();
@@ -102,7 +103,7 @@ namespace SpaceFortress.View
                 PlanetDrawPanel.Height = this.Height - 100;
                 PlanetDrawPanel.Width = this.Width - 100;
                 int sizeMod;
-                if (PlanetDrawPanel.Height > PlanetDrawPanel.Width)
+                if (PlanetDrawPanel.Height < PlanetDrawPanel.Width)
                 {
                     sizeMod = PlanetDrawPanel.Height;
                 } else
@@ -177,7 +178,7 @@ namespace SpaceFortress.View
 
         private void drawSelection(Graphics theGraphics)
         {
-            Rectangle box = new Rectangle(selectionX, selectionY, 10, 10);
+            Rectangle box = new Rectangle(selectionX, selectionY, mapScale, mapScale);
 
 
             Pen drawPen = new Pen(Color.Red);
@@ -189,9 +190,23 @@ namespace SpaceFortress.View
 
         private void WorldGenForm_SizeChanged(object sender, EventArgs e)
         {
-            if(showingPlanet)
+            
+
+
+            if (showingPlanet)
             {
-                mapScale = PlanetDrawPanel.Width / myPlanet.getTerrain().Length;
+                //mapScale = PlanetDrawPanel.Width / myPlanet.getTerrain().Length;
+
+                int sizeMod;
+                if (PlanetDrawPanel.Height < PlanetDrawPanel.Width)
+                {
+                    sizeMod = PlanetDrawPanel.Height;
+                }
+                else
+                {
+                    sizeMod = PlanetDrawPanel.Width;
+                }
+                mapScale = sizeMod / myPlanet.getTerrain().Length;
                 drawPlanet();
             }
         }
