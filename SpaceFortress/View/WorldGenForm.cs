@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SpaceFortress.Model;
 using SpaceFortress.Model.WorldGenerator;
 using SpaceFortress.Model.Landscape;
+using System.Drawing.Drawing2D;
 
 namespace SpaceFortress.View
 {
@@ -96,6 +97,7 @@ namespace SpaceFortress.View
                 CreateWorld newPlanet = new CreateWorld();
 
                 this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
+                PlanetDrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPlanet);
 
                 myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));       
 
@@ -114,19 +116,27 @@ namespace SpaceFortress.View
                 mapScale = sizeMod / myPlanet.getTerrain().Length;
                 PlanetDrawPanel.Show();
                 PlanetDrawPanel.Focus();
-                drawPlanet();
+                PlanetDrawPanel.Invalidate();
+                //drawPlanet();
             }
         }
 
-        private void drawPlanet()
+        private void drawPlanet(object sender, PaintEventArgs e)
         {
-            Graphics graphics = PlanetDrawPanel.CreateGraphics();
+
+            //    private void panel1_Paint(object sender, PaintEventArgs e)
+            //{
+            //    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            //    e.Graphics.FillEllipse(Brushes.Red, new Rectangle(10, 10, 32, 32));
+            //}
+            //Graphics graphics = PlanetDrawPanel.CreateGraphics();
+
             Terrain[][] drawPlanet = myPlanet.getTerrain();
             Brush drawBrush = null;
             int endWidthPoint = PlanetDrawPanel.Width - (int)(PlanetDrawPanel.Width * 0.05);
             int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
 
-            graphics.Clear(Color.White);
+            e.Graphics.Clear(Color.White);
 
             Console.Write("scale: " + mapScale);
             Console.Write("width: " + PlanetDrawPanel.Width);
@@ -146,7 +156,7 @@ namespace SpaceFortress.View
 
                     if (temp.GetType().Equals(typeof(Water)))
                     {
-                        //int colorVal = (int)(255 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
+                        //int colorVal = (int)(100 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
                         drawBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
 
                     }
@@ -170,10 +180,10 @@ namespace SpaceFortress.View
                         drawBrush = new SolidBrush(Color.Red);
                     }
 
-                    graphics.FillRectangle(drawBrush, rect);
+                    e.Graphics.FillRectangle(drawBrush, rect);
                 }
             }
-            drawSelection(graphics);
+            drawSelection(e.Graphics);
         }
 
         private void drawSelection(Graphics theGraphics)
@@ -190,9 +200,6 @@ namespace SpaceFortress.View
 
         private void WorldGenForm_SizeChanged(object sender, EventArgs e)
         {
-            
-
-
             if (showingPlanet)
             {
                 //mapScale = PlanetDrawPanel.Width / myPlanet.getTerrain().Length;
@@ -207,7 +214,8 @@ namespace SpaceFortress.View
                     sizeMod = PlanetDrawPanel.Width;
                 }
                 mapScale = sizeMod / myPlanet.getTerrain().Length;
-                drawPlanet();
+                PlanetDrawPanel.Invalidate();
+                //drawPlanet();
             }
         }
 
@@ -216,7 +224,8 @@ namespace SpaceFortress.View
             CreateWorld newPlanet = new CreateWorld();
 
             myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));
-            this.drawPlanet();
+            //this.drawPlanet();
+            PlanetDrawPanel.Invalidate();
             PlanetDrawPanel.Focus();
         }
 
@@ -227,25 +236,30 @@ namespace SpaceFortress.View
 
             if (e.KeyChar == 'w')
             {
-                selectionY -= 10;
+                selectionY -= mapScale;
             } else if (e.KeyChar == 's')
             {
-                selectionY += 10;
+                selectionY += mapScale;
             } else if (e.KeyChar == 'a')
             {
-                selectionX -= 10;
+                selectionX -= mapScale;
             } else if (e.KeyChar == 'd')
             {
-                selectionX += 10;
+                selectionX += mapScale;
             }
-            this.drawPlanet();
+            PlanetDrawPanel.Invalidate();
+            //this.drawPlanet();
             PlanetDrawPanel.Focus();
         }
 
         private void PlanetDrawPanel_Click(object sender, EventArgs e)
         {
             this.Focus();
-            Console.WriteLine("hello");
+        }
+
+        private void PlanetDrawPanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            Console.WriteLine(e.ScrollOrientation);
         }
     }
 }
