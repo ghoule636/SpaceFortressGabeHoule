@@ -19,9 +19,16 @@ namespace SpaceFortress.View
         private GameEngine myGame;
         private Planet myPlanet;
         private int mapScale;
+        private int zoomLevel;
         private bool showingPlanet;
         private int selectionX;
         private int selectionY;
+        private int cameraX;
+        private int cameraY;
+        private int mouseDownX;
+        private int mouseDowny;
+        private bool isMouseDown;
+        private Rectangle selectionBox;
 
         public WorldGenForm(GameEngine theGame)
         {
@@ -31,10 +38,17 @@ namespace SpaceFortress.View
             myGame = theGame;
             myPlanet = theGame.getPlanet();
             PlanetSizeCmbBox.DataSource = myPlanet.getSizes();
+            isMouseDown = false;
             mapScale = 50;
-            selectionX = 50;
-            selectionY = 50;
+            zoomLevel = 1;
+            selectionX = 0;
+            selectionY = 0;
+            cameraX = 0;
+            cameraY = 0;
             showingPlanet = false;
+
+            selectionBox = new Rectangle(selectionX * mapScale, selectionY * mapScale, mapScale, mapScale);
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -97,6 +111,12 @@ namespace SpaceFortress.View
                 CreateWorld newPlanet = new CreateWorld();
 
                 this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
+                this.PlanetDrawPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PlanetDrawPanel_Scroll);
+
+                this.PlanetDrawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+                this.PlanetDrawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+                this.PlanetDrawPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+
                 PlanetDrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPlanet);
 
                 myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));       
@@ -114,6 +134,7 @@ namespace SpaceFortress.View
                 }
 
                 mapScale = sizeMod / myPlanet.getTerrain().Length;
+
                 PlanetDrawPanel.Show();
                 PlanetDrawPanel.Focus();
                 PlanetDrawPanel.Invalidate();
@@ -138,14 +159,9 @@ namespace SpaceFortress.View
 
             e.Graphics.Clear(Color.White);
 
-            Console.Write("scale: " + mapScale);
-            Console.Write("width: " + PlanetDrawPanel.Width);
-            Console.Write("mapWidth: " + myPlanet.getTerrain().Length);
-            Console.WriteLine();
-
-            for (int i = 0; i < drawPlanet.Length; i += 1)
+            for (int i = cameraX; i < drawPlanet.Length; i += 1)
             {
-                for (int j = 0; j < drawPlanet[0].Length; j += 1)
+                for (int j = cameraY; j < drawPlanet[0].Length; j += 1)
                 {
                     Rectangle rect = new Rectangle(i * mapScale, j * mapScale, mapScale, mapScale);
 
@@ -183,20 +199,12 @@ namespace SpaceFortress.View
                     e.Graphics.FillRectangle(drawBrush, rect);
                 }
             }
-            drawSelection(e.Graphics);
-        }
-
-        private void drawSelection(Graphics theGraphics)
-        {
-            Rectangle box = new Rectangle(selectionX, selectionY, mapScale, mapScale);
-
 
             Pen drawPen = new Pen(Color.Red);
 
-            //Brush drawPen = new SolidBrush(Color.Red);
-
-            theGraphics.DrawRectangle(drawPen, box);
+            e.Graphics.DrawRectangle(drawPen, selectionBox);
         }
+
 
         private void WorldGenForm_SizeChanged(object sender, EventArgs e)
         {
@@ -214,6 +222,8 @@ namespace SpaceFortress.View
                     sizeMod = PlanetDrawPanel.Width;
                 }
                 mapScale = sizeMod / myPlanet.getTerrain().Length;
+                selectionBox.Width = mapScale + zoomLevel;
+                selectionBox.Height = mapScale + zoomLevel;
                 PlanetDrawPanel.Invalidate();
                 //drawPlanet();
             }
@@ -231,22 +241,24 @@ namespace SpaceFortress.View
 
         private void WorldGenForm_KeyPress(object sender, KeyPressEventArgs e)
         {
-            Console.WriteLine(e.KeyChar);
-            Console.WriteLine("sender: ", sender);
 
             if (e.KeyChar == 'w')
             {
-                selectionY -= mapScale;
+                selectionY -= 1;
             } else if (e.KeyChar == 's')
             {
-                selectionY += mapScale;
+                selectionY += 1;
             } else if (e.KeyChar == 'a')
             {
-                selectionX -= mapScale;
+                selectionX -= 1;
             } else if (e.KeyChar == 'd')
             {
-                selectionX += mapScale;
+                selectionX += 1;
             }
+            selectionBox.Width = mapScale;
+            selectionBox.Height = mapScale;
+            selectionBox.X = selectionX * mapScale;
+            selectionBox.Y = selectionY * mapScale;
             PlanetDrawPanel.Invalidate();
             //this.drawPlanet();
             PlanetDrawPanel.Focus();
@@ -255,11 +267,46 @@ namespace SpaceFortress.View
         private void PlanetDrawPanel_Click(object sender, EventArgs e)
         {
             this.Focus();
+            Console.WriteLine("hi");
         }
 
-        private void PlanetDrawPanel_Scroll(object sender, ScrollEventArgs e)
+        private void PlanetDrawPanel_Scroll(object sender, MouseEventArgs e)
         {
-            Console.WriteLine(e.ScrollOrientation);
+            Console.WriteLine(e.Delta);
+            Console.WriteLine("hello!");
+
+            //zoomLevel += e.Delta;
+
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs e)
+        {
+            isMouseDown = true;
+            Console.WriteLine("Mouse down!");
+            mouseDownX = e.X;
+            mouseDowny = e.Y;
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseDown)
+            {
+                Console.WriteLine("hi?");
+                int xDiff = mouseDownX - e.X;
+                int yDiff = mouseDowny - e.Y;
+
+                xDiff *= -1;
+                yDiff *= -1;
+
+                cameraX += xDiff;
+                cameraY += yDiff;
+                Invalidate();
+            }
+        }
+
+        private void OnMouseUp(object sender, MouseEventArgs e)
+        {
+            isMouseDown = false;
         }
     }
 }

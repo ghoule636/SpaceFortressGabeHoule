@@ -113,7 +113,6 @@
             this.PlanetDrawPanel.Name = "PlanetDrawPanel";
             this.PlanetDrawPanel.Size = new System.Drawing.Size(150, 154);
             this.PlanetDrawPanel.TabIndex = 7;
-            this.PlanetDrawPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.PlanetDrawPanel_Scroll);
             this.PlanetDrawPanel.Click += new System.EventHandler(this.PlanetDrawPanel_Click);
             // 
             // button1
