@@ -29,6 +29,10 @@ namespace SpaceFortress.View
         private int mouseDowny;
         private bool isMouseDown;
         private Rectangle selectionBox;
+        private Brush OceanBrush;
+        private Brush MountainBrush;
+        private Brush HillBrush;
+        private Brush PlainsBrush;
 
         public WorldGenForm(GameEngine theGame)
         {
@@ -46,6 +50,11 @@ namespace SpaceFortress.View
             cameraX = 0;
             cameraY = 0;
             showingPlanet = false;
+            OceanBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
+            MountainBrush = new SolidBrush(Color.DarkGray);
+            PlainsBrush = new SolidBrush(Color.ForestGreen);
+            HillBrush = new SolidBrush(Color.SaddleBrown);
+
 
             selectionBox = new Rectangle(selectionX * mapScale, selectionY * mapScale, mapScale, mapScale);
 
@@ -98,7 +107,7 @@ namespace SpaceFortress.View
 
             return result;
         }
-
+        
         private void nextBtn_Click(object sender, EventArgs e)
         {
             if (myPlanet.getName() != "")
@@ -153,7 +162,7 @@ namespace SpaceFortress.View
             //Graphics graphics = PlanetDrawPanel.CreateGraphics();
 
             Terrain[][] drawPlanet = myPlanet.getTerrain();
-            Brush drawBrush = null;
+            //Brush drawBrush = null;
             int endWidthPoint = PlanetDrawPanel.Width - (int)(PlanetDrawPanel.Width * 0.05);
             int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
 
@@ -173,30 +182,29 @@ namespace SpaceFortress.View
                     if (temp.GetType().Equals(typeof(Water)))
                     {
                         //int colorVal = (int)(100 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
-                        drawBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
-
+                        e.Graphics.FillRectangle(OceanBrush, rect);
                     }
                     else if (temp.GetType().Equals(typeof(Mountain)))
                     {
-                        drawBrush = new SolidBrush(Color.Gray);
+                        e.Graphics.FillRectangle(MountainBrush, rect);
                     }
                     else if (temp.GetType().Equals(typeof(Hill)))
                     {
-                        drawBrush = new SolidBrush(Color.SaddleBrown);
+                        e.Graphics.FillRectangle(HillBrush, rect);
                     }
                     else if (temp.GetType().Equals(typeof(Plains)))
                     {
                         //int colorVal = (int)(255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight()) + .0001));
                         //drawBrush = new SolidBrush(Color.FromArgb(255, 0, colorVal, 0));
 
-                        drawBrush = new SolidBrush(Color.ForestGreen);
+                        e.Graphics.FillRectangle(PlainsBrush, rect);
                     }
                     else
                     {
-                        drawBrush = new SolidBrush(Color.Red);
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Red), rect);
                     }
 
-                    e.Graphics.FillRectangle(drawBrush, rect);
+                    //e.Graphics.FillRectangle(drawBrush, rect);
                 }
             }
 
@@ -264,10 +272,13 @@ namespace SpaceFortress.View
             PlanetDrawPanel.Focus();
         }
 
-        private void PlanetDrawPanel_Click(object sender, EventArgs e)
+        private void PlanetDrawPanel_Click(object sender, MouseEventArgs e)
         {
-            this.Focus();
-            Console.WriteLine("hi");
+            selectionX = e.X / mapScale;
+            selectionY = e.Y / mapScale;
+            selectionBox.X = selectionX * mapScale;
+            selectionBox.Y = selectionY * mapScale;
+            PlanetDrawPanel.Invalidate();
         }
 
         private void PlanetDrawPanel_Scroll(object sender, MouseEventArgs e)
