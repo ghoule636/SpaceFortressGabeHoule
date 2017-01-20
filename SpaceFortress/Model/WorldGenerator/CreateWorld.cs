@@ -23,6 +23,7 @@ namespace SpaceFortress.Model.WorldGenerator
         private double[][] myHeightMap;
         private int mySize;
 
+        
         public Terrain[][] createMap(String theSize)
         {
             if (theSize == "Small")
