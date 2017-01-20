@@ -22,6 +22,7 @@ namespace SpaceFortress.View
         private int sizeMod;
         private int zoomLevel;
         private int zoomDelta;
+        private int xDragDelta;
         private bool showingPlanet;
         private int selectionX;
         private int selectionY;
@@ -283,10 +284,10 @@ namespace SpaceFortress.View
             {
                 selectionX += 1;
             }
-            selectionBox.Width = mapScale;
-            selectionBox.Height = mapScale;
-            selectionBox.X = selectionX * mapScale;
-            selectionBox.Y = selectionY * mapScale;
+            selectionBox.Width = mapScale + zoomLevel;
+            selectionBox.Height = mapScale + zoomLevel;
+            selectionBox.X = selectionX * (mapScale + zoomLevel);
+            selectionBox.Y = selectionY * (mapScale + zoomLevel);
             PlanetDrawPanel.Invalidate();
             //this.drawPlanet();
             PlanetDrawPanel.Focus();
@@ -296,8 +297,8 @@ namespace SpaceFortress.View
         {
             selectionX = e.X / (mapScale + zoomLevel);
             selectionY = e.Y / (mapScale + zoomLevel);
-            selectionBox.X = selectionX * mapScale + zoomLevel;
-            selectionBox.Y = selectionY * mapScale + zoomLevel;
+            selectionBox.X = selectionX * (mapScale + zoomLevel);
+            selectionBox.Y = selectionY * (mapScale + zoomLevel);
             PlanetDrawPanel.Invalidate();
         }
 
@@ -309,7 +310,10 @@ namespace SpaceFortress.View
                 if (zoomLevel < 50)
                 {
                     zoomLevel += 1;
-                    Console.WriteLine(zoomLevel);
+                    selectionBox.Width = mapScale + zoomLevel;
+                    selectionBox.Height = mapScale + zoomLevel;
+                    selectionBox.X = selectionX * (mapScale + zoomLevel);
+                    selectionBox.Y = selectionY * (mapScale + zoomLevel);
                 }
                 zoomDelta = 0;
                 PlanetDrawPanel.Invalidate();
@@ -318,7 +322,10 @@ namespace SpaceFortress.View
                 if (zoomLevel >= 0)
                 {
                     zoomLevel -= 1;
-                    Console.WriteLine(zoomLevel);
+                    selectionBox.Width = mapScale + zoomLevel;
+                    selectionBox.Height = mapScale + zoomLevel;
+                    selectionBox.X = selectionX * (mapScale + zoomLevel);
+                    selectionBox.Y = selectionY * (mapScale + zoomLevel);
                 }
                 zoomDelta = 0;
                 PlanetDrawPanel.Invalidate();
@@ -338,6 +345,7 @@ namespace SpaceFortress.View
             {
                 int xDiff = mouseDownX - e.X;
                 int yDiff = mouseDowny - e.Y;
+                int maxNegativeX = 0;
 
                 mouseDownX = e.X;
                 mouseDowny = e.Y;
@@ -345,38 +353,73 @@ namespace SpaceFortress.View
                 xDiff *= -1;
                 yDiff *= -1;
 
+                xDragDelta += xDiff;
+
+                if (xDragDelta > 10)
+                {
+                    int maxSize = myPlanet.getTerrain().Length;
+
+                    int mapSize = maxSize * ((PlanetDrawPanel.Width / maxSize) + zoomLevel);
+
+                    int cameraAdjust = mapSize - PlanetDrawPanel.Width;
+
+                    //this value is coming out larger than it should at certain zoom levels allowing the map to move past its boundaries...
+                    if (cameraAdjust > 0)
+                    {
+                        maxNegativeX = -cameraAdjust;
+                    }
+
+                    cameraX += 1;
+                    xDragDelta = 0;
+
+                    Console.WriteLine("Max negative val: " + maxNegativeX);
+                    Console.WriteLine("Before: " + cameraX);
+
+                    if (cameraX > 0)
+                    {
+                        cameraX = 0;
+                    }
+
+                    Console.WriteLine("After: " + cameraX);
+
+                    Invalidate();
+                } else if (xDragDelta < -10)
+                {
+                    int maxSize = myPlanet.getTerrain().Length;
+
+                    int mapSize = maxSize * ((PlanetDrawPanel.Width / maxSize) + zoomLevel);
+
+                    int cameraAdjust = mapSize - PlanetDrawPanel.Width;
+
+                    //this value is coming out larger than it should at certain zoom levels allowing the map to move past its boundaries...
+                    if (cameraAdjust > 0)
+                    {
+                        maxNegativeX = -cameraAdjust;
+                    }
+
+                    cameraX -= 1;
+                    xDragDelta = 0;
+
+                    Console.WriteLine("Max negative val: " + maxNegativeX);
+                    Console.WriteLine("Before: " + cameraX);
+
+                    if (cameraX < maxNegativeX)
+                    {
+                        cameraX = maxNegativeX;
+                    }
+                    //else if (cameraX > 0)
+                    //{
+                    //    cameraX = 0;
+                    //}
+
+                    Console.WriteLine("After: " + cameraX);
+
+                    Invalidate();
+                }
+
                 Console.WriteLine(xDiff);
 
-                int maxNegativeX = 0;
-                int maxNegativeY = 0;
-
-                int maxSize = myPlanet.getTerrain().Length;
-
-                int mapSize = maxSize * ((PlanetDrawPanel.Width / maxSize) + zoomLevel);
-
-                int cameraAdjust = mapSize - PlanetDrawPanel.Width;
-
-                //this value is coming out larger than it should at certain zoom levels allowing the map to move past its boundaries...
-                if (cameraAdjust > 0)
-                {
-                    maxNegativeX = -cameraAdjust;
-                }
-
-                cameraX += xDiff;
-
-
-                Console.WriteLine("Max negative val: " + maxNegativeX);
-                Console.WriteLine("Before: " + cameraX);
-
-                if (cameraX < maxNegativeX)
-                {
-                    cameraX = maxNegativeX;
-                } else if (cameraX > 0)
-                {
-                    cameraX = 0;
-                }
-
-                Console.WriteLine("After: " + cameraX);
+                
 
                 //if (cameraX >= 0 && cameraX < maxSize)
                 //{
@@ -399,7 +442,7 @@ namespace SpaceFortress.View
                 //}
 
 
-                Invalidate();
+                
             }
         }
 
