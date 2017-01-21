@@ -334,7 +334,7 @@ namespace SpaceFortress.View
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            isMouseDown = true;
+            //isMouseDown = true;
             mouseDownX = e.X;
             mouseDowny = e.Y;
         }
