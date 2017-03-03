@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpaceFortress.Model.Landscape;
+using System.Drawing;
 
 namespace SpaceFortress.Model.WorldGenerator
 {
     public class Planet
     {
         private Terrain[][] myWorld;
+        private Bitmap myMap;
         private String myName;
         private String mySize;
         private String[] mySizes;
@@ -22,6 +24,7 @@ namespace SpaceFortress.Model.WorldGenerator
         public Planet()
         {
             myWorld = new Terrain[0][];
+            myMap = new Bitmap(1, 1);
             myName = "";
             mySizes = new String[] { "Small", "Medium", "Large" };
             mySize = mySizes[0];
@@ -80,6 +83,16 @@ namespace SpaceFortress.Model.WorldGenerator
                     }
                 }
             }
+        }
+
+        public void setMap(Bitmap theMap)
+        {
+            myMap = theMap;
+        }
+
+        public Bitmap getMap()
+        {
+            return myMap;
         }
 
         public String[] getSizes()

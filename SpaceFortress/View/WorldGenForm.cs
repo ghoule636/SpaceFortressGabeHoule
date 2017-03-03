@@ -126,13 +126,15 @@ namespace SpaceFortress.View
                 this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
                 this.PlanetDrawPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PlanetDrawPanel_Scroll);
 
-                this.PlanetDrawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-                this.PlanetDrawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
-                this.PlanetDrawPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+//                this.PlanetDrawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+//                this.PlanetDrawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+//                this.PlanetDrawPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
 
                 PlanetDrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPlanet);
+                //SelectionBoxPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawSelectionBox);
 
                 myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));
+                myPlanet.setMap(newPlanet.getBitmap());
 
                 showingPlanet = true;
                 PlanetDrawPanel.Height = this.Height - 100;
@@ -167,69 +169,98 @@ namespace SpaceFortress.View
             //Graphics graphics = PlanetDrawPanel.CreateGraphics();
 
             Terrain[][] drawPlanet = myPlanet.getTerrain();
+
+            Bitmap drawMap = myPlanet.getMap();
             //Brush drawBrush = null;
             //int endWidthPoint = PlanetDrawPanel.Width - (int)(PlanetDrawPanel.Width * 0.05);
             //int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
 
-            e.Graphics.Clear(Color.White);
+            //e.Graphics.Clear(Color.White);
 
             int scaleOffset = mapScale + zoomLevel;
 
-            if (cameraX < 0)
-            {
-                cameraX *= -1;
-            }
+            e.Graphics.DrawImage(drawMap, new Point(0, 0));
 
-            int gridX = 0;
-            int gridY = 0;
 
-            for (int i = cameraX; i < drawPlanet.Length; i += 1)
-            {
-                for (int j = cameraY; j < drawPlanet[0].Length; j += 1)
-                {
-                    Rectangle rect = new Rectangle(gridX * scaleOffset, gridY * scaleOffset, scaleOffset, scaleOffset);
-                    gridY++;
+            //if (cameraX < 0)
+            //{
+            //    cameraX *= -1;
+            //}
 
-                    Terrain temp = drawPlanet[i][j];
+            //int gridX = 0;
+            //int gridY = 0;
 
-                    //int colorVal = (int) (255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight())));
-                    //drawBrush = new SolidBrush(Color.FromArgb(255, colorVal, colorVal, colorVal));
+            //for (int i = cameraX; i < drawPlanet.Length; i += 1)
+            //{
+            //    for (int j = cameraY; j < drawPlanet[0].Length; j += 1)
+            //    {
+            //        Rectangle rect = new Rectangle(gridX * scaleOffset, gridY * scaleOffset, scaleOffset, scaleOffset);
+            //        gridY++;
 
-                    if (temp.GetType().Equals(typeof(Water)))
-                    {
-                        //int colorVal = (int)(100 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
-                        e.Graphics.FillRectangle(OceanBrush, rect);
-                    }
-                    else if (temp.GetType().Equals(typeof(Mountain)))
-                    {
-                        e.Graphics.FillRectangle(MountainBrush, rect);
-                    }
-                    else if (temp.GetType().Equals(typeof(Hill)))
-                    {
-                        e.Graphics.FillRectangle(HillBrush, rect);
-                    }
-                    else if (temp.GetType().Equals(typeof(Plains)))
-                    {
-                        //int colorVal = (int)(255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight()) + .0001));
-                        //drawBrush = new SolidBrush(Color.FromArgb(255, 0, colorVal, 0));
+            //        Terrain temp = drawPlanet[i][j];
 
-                        e.Graphics.FillRectangle(PlainsBrush, rect);
-                    }
-                    else
-                    {
-                        e.Graphics.FillRectangle(new SolidBrush(Color.Red), rect);
-                    }
+            //        //int colorVal = (int) (255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight())));
+            //        //drawBrush = new SolidBrush(Color.FromArgb(255, colorVal, colorVal, colorVal));
 
-                    //e.Graphics.FillRectangle(drawBrush, rect);
-                }
-                gridX++;
-                gridY = 0;
-            }
-            
+            //        if (temp.GetType().Equals(typeof(Water)))
+            //        {
+            //            //int colorVal = (int)(100 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
+            //            e.Graphics.FillRectangle(OceanBrush, rect);
+            //        }
+            //        else if (temp.GetType().Equals(typeof(Mountain)))
+            //        {
+            //            e.Graphics.FillRectangle(MountainBrush, rect);
+            //        }
+            //        else if (temp.GetType().Equals(typeof(Hill)))
+            //        {
+            //            e.Graphics.FillRectangle(HillBrush, rect);
+            //        }
+            //        else if (temp.GetType().Equals(typeof(Plains)))
+            //        {
+            //            //int colorVal = (int)(255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight()) + .0001));
+            //            //drawBrush = new SolidBrush(Color.FromArgb(255, 0, colorVal, 0));
 
-            Pen drawPen = new Pen(Color.Red);
+            //            e.Graphics.FillRectangle(PlainsBrush, rect);
+            //        }
+            //        else
+            //        {
+            //            e.Graphics.FillRectangle(new SolidBrush(Color.Red), rect);
+            //        }
 
-            e.Graphics.DrawRectangle(drawPen, selectionBox);
+            //        //e.Graphics.FillRectangle(drawBrush, rect);
+            //    }
+            //    gridX++;
+            //    gridY = 0;
+            //}
+            //Rectangle coverBox = new Rectangle(selectionBox.X - selectionBox.Width, selectionBox.Y - selectionBox.Height, selectionBox.Width * 3, selectionBox.Height * 3);
+            //Pen drawPen = new Pen(Color.White);
+
+            //e.Graphics.DrawRectangle(drawPen, coverBox);
+
+            //drawPen = new Pen(Color.Red);
+
+            //e.Graphics.DrawRectangle(drawPen, selectionBox);
+
+        }
+
+
+        private void drawSelectionBox()
+        {
+            SelectionBoxPanel.Invalidate();
+
+            Graphics formGraphics = SelectionBoxPanel.CreateGraphics();
+
+            Pen drawPen = new Pen(Color.White);
+
+            //formGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
+
+            Rectangle coverBox = new Rectangle(selectionBox.X - selectionBox.Width, selectionBox.Y - selectionBox.Height, selectionBox.Width * 3, selectionBox.Height * 3);
+
+            formGraphics.DrawRectangle(drawPen, coverBox);   
+             
+            drawPen = new Pen(Color.Red);
+
+            formGraphics.DrawRectangle(drawPen, selectionBox);
         }
 
 
@@ -251,6 +282,7 @@ namespace SpaceFortress.View
                 mapScale = sizeMod / myPlanet.getTerrain().Length;
                 selectionBox.Width = mapScale + zoomLevel;
                 selectionBox.Height = mapScale + zoomLevel;
+                drawSelectionBox();
                 PlanetDrawPanel.Invalidate();
                 //drawPlanet();
             }
@@ -266,6 +298,7 @@ namespace SpaceFortress.View
             //this.drawPlanet();
             PlanetDrawPanel.Invalidate();
             PlanetDrawPanel.Focus();
+            drawSelectionBox();
         }
 
         private void WorldGenForm_KeyPress(object sender, KeyPressEventArgs e)
@@ -288,9 +321,11 @@ namespace SpaceFortress.View
             selectionBox.Height = mapScale + zoomLevel;
             selectionBox.X = selectionX * (mapScale + zoomLevel);
             selectionBox.Y = selectionY * (mapScale + zoomLevel);
-            PlanetDrawPanel.Invalidate();
+            //SelectionBoxPanel.Invalidate();
+            //PlanetDrawPanel.Invalidate();
             //this.drawPlanet();
             PlanetDrawPanel.Focus();
+            drawSelectionBox();
         }
 
         private void PlanetDrawPanel_Click(object sender, MouseEventArgs e)
