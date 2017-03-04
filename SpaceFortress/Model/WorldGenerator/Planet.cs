@@ -24,6 +24,7 @@ namespace SpaceFortress.Model.WorldGenerator
         public Planet()
         {
             myWorld = new Terrain[0][];
+            myMap = new Bitmap(1, 1);
             myName = "";
             mySizes = new String[] { "Small", "Medium", "Large" };
             mySize = mySizes[0];
@@ -82,6 +83,16 @@ namespace SpaceFortress.Model.WorldGenerator
                     }
                 }
             }
+        }
+
+        public void setMap(Bitmap theMap)
+        {
+            myMap = theMap;
+        }
+
+        public Bitmap getMap()
+        {
+            return myMap;
         }
 
         public String[] getSizes()

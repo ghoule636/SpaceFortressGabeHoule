@@ -38,7 +38,9 @@
             this.MapGenInfo = new System.Windows.Forms.Label();
             this.PlanetDrawPanel = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.SelectionBoxPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.PlanetDrawPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -107,13 +109,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PlanetDrawPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.PlanetDrawPanel.Controls.Add(this.SelectionBoxPanel);
             this.PlanetDrawPanel.Location = new System.Drawing.Point(27, 29);
             this.PlanetDrawPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PlanetDrawPanel.MinimumSize = new System.Drawing.Size(150, 154);
             this.PlanetDrawPanel.Name = "PlanetDrawPanel";
             this.PlanetDrawPanel.Size = new System.Drawing.Size(150, 154);
             this.PlanetDrawPanel.TabIndex = 7;
-            this.PlanetDrawPanel.Click += new System.EventHandler(this.PlanetDrawPanel_Click);
+            this.PlanetDrawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlanetDrawPanel_Click);
             // 
             // button1
             // 
@@ -126,6 +129,20 @@
             this.button1.Text = "Randomize";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.randomizeBtnClick);
+            // 
+            // SelectionBoxPanel
+            // 
+            this.SelectionBoxPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectionBoxPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.SelectionBoxPanel.BackColor = System.Drawing.Color.FromArgb(0, 0, 0, 0);
+            this.SelectionBoxPanel.Location = new System.Drawing.Point(8, 8);
+            this.SelectionBoxPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.SelectionBoxPanel.MinimumSize = new System.Drawing.Size(150, 154);
+            this.SelectionBoxPanel.Name = "SelectionBoxPanel";
+            this.SelectionBoxPanel.Size = new System.Drawing.Size(150, 154);
+            this.SelectionBoxPanel.TabIndex = 8;
             // 
             // WorldGenForm
             // 
@@ -141,7 +158,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.MinimumSize = new System.Drawing.Size(436, 576);
+            this.MinimumSize = new System.Drawing.Size(433, 567);
             this.Name = "WorldGenForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WorldGenForm";
@@ -149,6 +166,7 @@
             this.Load += new System.EventHandler(this.WorldGenForm_Load);
             this.SizeChanged += new System.EventHandler(this.WorldGenForm_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.PlanetDrawPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,5 +183,6 @@
         private System.Windows.Forms.Label MapGenInfo;
         private System.Windows.Forms.Panel PlanetDrawPanel;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel SelectionBoxPanel;
     }
 }
