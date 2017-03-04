@@ -175,7 +175,7 @@ namespace SpaceFortress.Model.WorldGenerator
 
         private void createBitMap()
         {
-            int scaleOffset = 50;
+            int scaleOffset = 1;
             Bitmap map = new Bitmap(mySize * scaleOffset, mySize * scaleOffset);
             Graphics mapG = Graphics.FromImage(map);            
 

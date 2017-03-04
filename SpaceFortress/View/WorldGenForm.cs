@@ -124,11 +124,11 @@ namespace SpaceFortress.View
                 CreateWorld newPlanet = new CreateWorld();
 
                 this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.WorldGenForm_KeyPress);
-                this.PlanetDrawPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PlanetDrawPanel_Scroll);
+                //this.PlanetDrawPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PlanetDrawPanel_Scroll);
 
-//                this.PlanetDrawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
-//                this.PlanetDrawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
-//                this.PlanetDrawPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
+                //                this.PlanetDrawPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnMouseDown);
+                //                this.PlanetDrawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMove);
+                //                this.PlanetDrawPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnMouseUp);
 
                 PlanetDrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPlanet);
                 //SelectionBoxPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawSelectionBox);
@@ -170,7 +170,7 @@ namespace SpaceFortress.View
 
             Terrain[][] drawPlanet = myPlanet.getTerrain();
 
-            Bitmap drawMap = myPlanet.getMap();
+            //Bitmap drawMap = myPlanet.getMap();
             //Brush drawBrush = null;
             //int endWidthPoint = PlanetDrawPanel.Width - (int)(PlanetDrawPanel.Width * 0.05);
             //int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
@@ -179,7 +179,7 @@ namespace SpaceFortress.View
 
             int scaleOffset = mapScale + zoomLevel;
 
-            e.Graphics.DrawImage(drawMap, new Point(0, 0));
+            e.Graphics.DrawImage(myPlanet.getMap(), new Point(0, 0));
 
 
             //if (cameraX < 0)
@@ -237,30 +237,30 @@ namespace SpaceFortress.View
 
             //e.Graphics.DrawRectangle(drawPen, coverBox);
 
-            //drawPen = new Pen(Color.Red);
+            Pen drawPen = new Pen(Color.Red);
 
-            //e.Graphics.DrawRectangle(drawPen, selectionBox);
+            e.Graphics.DrawRectangle(drawPen, selectionBox);
 
         }
 
 
         private void drawSelectionBox()
         {
-            SelectionBoxPanel.Invalidate();
+            //SelectionBoxPanel.Invalidate();
 
-            Graphics formGraphics = SelectionBoxPanel.CreateGraphics();
+            //Graphics formGraphics = SelectionBoxPanel.CreateGraphics();
 
-            Pen drawPen = new Pen(Color.White);
+            ////Pen drawPen = new Pen(Color.White);
 
-            //formGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
+            ////formGraphics.Clear(Color.FromArgb(0, 0, 0, 0));
 
-            Rectangle coverBox = new Rectangle(selectionBox.X - selectionBox.Width, selectionBox.Y - selectionBox.Height, selectionBox.Width * 3, selectionBox.Height * 3);
+            ////Rectangle coverBox = new Rectangle(selectionBox.X - selectionBox.Width, selectionBox.Y - selectionBox.Height, selectionBox.Width * 3, selectionBox.Height * 3);
 
-            formGraphics.DrawRectangle(drawPen, coverBox);   
+            ////formGraphics.DrawRectangle(drawPen, coverBox);   
              
-            drawPen = new Pen(Color.Red);
+            //Pen drawPen = new Pen(Color.Red);
 
-            formGraphics.DrawRectangle(drawPen, selectionBox);
+            //formGraphics.DrawRectangle(drawPen, selectionBox);
         }
 
 
