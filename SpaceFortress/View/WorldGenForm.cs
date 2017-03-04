@@ -155,7 +155,6 @@ namespace SpaceFortress.View
             //Graphics graphics = PlanetDrawPanel.CreateGraphics();
 
             Terrain[][] drawPlanet = myPlanet.getTerrain();
-            Brush drawBrush = null;
             int endWidthPoint = PlanetDrawPanel.Width - (int)(PlanetDrawPanel.Width * 0.05);
             int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
 
