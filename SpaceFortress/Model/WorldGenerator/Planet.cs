@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SpaceFortress.Model.Landscape;
+using System.Drawing;
 
 namespace SpaceFortress.Model.WorldGenerator
 {
     public class Planet
     {
         private Terrain[][] myWorld;
+        private Bitmap myMap;
         private String myName;
         private String mySize;
         private String[] mySizes;
@@ -115,6 +117,16 @@ namespace SpaceFortress.Model.WorldGenerator
         public double getOceanDepth()
         {
             return myOceanDepth;
+        }
+
+        public Bitmap getMap()
+        {
+            return myMap;
+        }
+
+        public void setMap(Bitmap theMap)
+        {
+            myMap = theMap;
         }
 
     }

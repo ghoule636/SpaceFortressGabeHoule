@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SpaceFortress.Model.Landscape;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace SpaceFortress.Model.WorldGenerator
 {
@@ -21,6 +22,7 @@ namespace SpaceFortress.Model.WorldGenerator
 
         private Terrain[][] myTerrain;
         private double[][] myHeightMap;
+        private Bitmap myMap;
         private int mySize;
 
         public Terrain[][] createMap(String theSize)
@@ -42,6 +44,8 @@ namespace SpaceFortress.Model.WorldGenerator
 
             generateGeography();
 
+            createBitMap();
+
             return myTerrain;
         }
 
@@ -55,6 +59,11 @@ namespace SpaceFortress.Model.WorldGenerator
                 myHeightMap[i] = new double[mySize];
                 myTerrain[i] = new Terrain[mySize];
             }
+        }
+
+        public Bitmap getMap()
+        {
+            return myMap;
         }
 
         /**
@@ -161,6 +170,74 @@ namespace SpaceFortress.Model.WorldGenerator
                     }
                 }
             }
+        }
+
+        private void createBitMap()
+        {
+            int scaleOffset = 1;
+            Bitmap map = new Bitmap(mySize * scaleOffset, mySize * scaleOffset);
+            Graphics mapG = Graphics.FromImage(map);
+
+            Brush OceanBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
+            Brush MountainBrush = new SolidBrush(Color.DarkGray);
+            Brush PlainsBrush = new SolidBrush(Color.ForestGreen);
+            Brush HillBrush = new SolidBrush(Color.SaddleBrown);
+
+            for (int i = 0; i < myTerrain.Length; i += 1)
+            {
+                for (int j = 0; j < myTerrain[0].Length; j += 1)
+                {
+                    Rectangle rect = new Rectangle(i * scaleOffset, j * scaleOffset, scaleOffset, scaleOffset);
+                    //gridY++;
+
+                    Terrain temp = myTerrain[i][j];
+
+                    //int colorVal = (int) (255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight())));
+                    //drawBrush = new SolidBrush(Color.FromArgb(255, colorVal, colorVal, colorVal));
+
+                    if (temp.GetType().Equals(typeof(Water)))
+                    {
+                        //int colorVal = (int)(100 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
+                        mapG.FillRectangle(OceanBrush, rect);
+                    }
+                    else if (temp.GetType().Equals(typeof(Mountain)))
+                    {
+                        mapG.FillRectangle(MountainBrush, rect);
+                    }
+                    else if (temp.GetType().Equals(typeof(Hill)))
+                    {
+                        mapG.FillRectangle(HillBrush, rect);
+                    }
+                    else if (temp.GetType().Equals(typeof(Plains)))
+                    {
+                        //int colorVal = (int)(255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight()) + .0001));
+                        //drawBrush = new SolidBrush(Color.FromArgb(255, 0, colorVal, 0));
+
+                        mapG.FillRectangle(PlainsBrush, rect);
+                    }
+                    else
+                    {
+                        mapG.FillRectangle(new SolidBrush(Color.Red), rect);
+                    }
+
+                    //e.Graphics.FillRectangle(drawBrush, rect);
+                }
+                //gridX++;
+                //gridY = 0;
+            }
+
+
+
+            //while (white <= 100)
+            //{
+            //    mapG.FillRectangle(Brushes.Red, 0, red, 200, 10);
+            //    mapG.FillRectangle(Brushes.White, 0, white, 200, 10);
+            //    red += 20;
+            //    white += 20;
+            //}
+
+            myMap = map;
+
         }
 
 

@@ -119,7 +119,8 @@ namespace SpaceFortress.View
 
                 PlanetDrawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPlanet);
 
-                myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));       
+                myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));
+                myPlanet.setMap(newPlanet.getMap());
 
                 showingPlanet = true;
                 PlanetDrawPanel.Height = this.Height - 100;
@@ -158,47 +159,7 @@ namespace SpaceFortress.View
             int endHeightPoint = PlanetDrawPanel.Height - (int)(PlanetDrawPanel.Height * 0.05);
 
             e.Graphics.Clear(Color.White);
-
-            for (int i = cameraX; i < drawPlanet.Length; i += 1)
-            {
-                for (int j = cameraY; j < drawPlanet[0].Length; j += 1)
-                {
-                    Rectangle rect = new Rectangle(i * mapScale, j * mapScale, mapScale, mapScale);
-
-                    Terrain temp = drawPlanet[i][j];
-
-                    //int colorVal = (int) (255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight())));
-                    //drawBrush = new SolidBrush(Color.FromArgb(255, colorVal, colorVal, colorVal));
-
-                    if (temp.GetType().Equals(typeof(Water)))
-                    {
-                        //int colorVal = (int)(100 * (Math.Abs(temp.getElevation() / myPlanet.getWaterLevel()) + .0001));
-                        drawBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
-
-                    }
-                    else if (temp.GetType().Equals(typeof(Mountain)))
-                    {
-                        drawBrush = new SolidBrush(Color.Gray);
-                    }
-                    else if (temp.GetType().Equals(typeof(Hill)))
-                    {
-                        drawBrush = new SolidBrush(Color.SaddleBrown);
-                    }
-                    else if (temp.GetType().Equals(typeof(Plains)))
-                    {
-                        //int colorVal = (int)(255 * (Math.Abs(temp.getElevation() / myPlanet.getMaxHeight()) + .0001));
-                        //drawBrush = new SolidBrush(Color.FromArgb(255, 0, colorVal, 0));
-
-                        drawBrush = new SolidBrush(Color.ForestGreen);
-                    }
-                    else
-                    {
-                        drawBrush = new SolidBrush(Color.Red);
-                    }
-
-                    e.Graphics.FillRectangle(drawBrush, rect);
-                }
-            }
+            e.Graphics.DrawImage(myPlanet.getMap(), new Point(0, 0));
 
             Pen drawPen = new Pen(Color.Red);
 
