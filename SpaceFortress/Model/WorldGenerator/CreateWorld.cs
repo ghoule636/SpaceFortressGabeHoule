@@ -22,6 +22,7 @@ namespace SpaceFortress.Model.WorldGenerator
 
         private Terrain[][] myTerrain;
         private double[][] myHeightMap;
+        private Bitmap myMap;
         private int mySize;
         private Bitmap myBitmap;
 
@@ -65,6 +66,11 @@ namespace SpaceFortress.Model.WorldGenerator
                 myHeightMap[i] = new double[mySize];
                 myTerrain[i] = new Terrain[mySize];
             }
+        }
+
+        public Bitmap getMap()
+        {
+            return myMap;
         }
 
         /**
@@ -177,6 +183,7 @@ namespace SpaceFortress.Model.WorldGenerator
         {
             int scaleOffset = 1;
             Bitmap map = new Bitmap(mySize * scaleOffset, mySize * scaleOffset);
+
             Graphics mapG = Graphics.FromImage(map);            
 
             Brush OceanBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
@@ -237,7 +244,8 @@ namespace SpaceFortress.Model.WorldGenerator
             //    white += 20;
             //}
 
-            myBitmap = map;
+            myMap = map;
+
 
         }
 

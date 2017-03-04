@@ -130,5 +130,15 @@ namespace SpaceFortress.Model.WorldGenerator
             return myOceanDepth;
         }
 
+        public Bitmap getMap()
+        {
+            return myMap;
+        }
+
+        public void setMap(Bitmap theMap)
+        {
+            myMap = theMap;
+        }
+
     }
 }
