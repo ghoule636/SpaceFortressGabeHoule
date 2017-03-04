@@ -122,6 +122,7 @@ namespace SpaceFortress.View
                 myPlanet.setTerrain(newPlanet.createMap(myPlanet.getSize()));
                 myPlanet.setMap(newPlanet.getMap());
 
+
                 showingPlanet = true;
                 PlanetDrawPanel.Height = this.Height - 100;
                 PlanetDrawPanel.Width = this.Width - 100;
@@ -160,6 +161,7 @@ namespace SpaceFortress.View
 
             e.Graphics.Clear(Color.White);
             e.Graphics.DrawImage(myPlanet.getMap(), new Point(0, 0));
+
 
             Pen drawPen = new Pen(Color.Red);
 

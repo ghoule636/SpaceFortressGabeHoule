@@ -180,7 +180,8 @@ namespace SpaceFortress.Model.WorldGenerator
         {
             int scaleOffset = 1;
             Bitmap map = new Bitmap(mySize * scaleOffset, mySize * scaleOffset);
-            Graphics mapG = Graphics.FromImage(map);
+
+            Graphics mapG = Graphics.FromImage(map);            
 
             Brush OceanBrush = new SolidBrush(Color.FromArgb(255, 0, 0, 200));
             Brush MountainBrush = new SolidBrush(Color.DarkGray);
@@ -241,6 +242,7 @@ namespace SpaceFortress.Model.WorldGenerator
             //}
 
             myMap = map;
+
 
         }
 
